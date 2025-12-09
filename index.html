@@ -1,168 +1,717 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Kp Edits</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanha Edits - Professional Video Editor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
-    body {
-        margin: 0;
-        font-family: 'Poppins', sans-serif;
-        background: linear-gradient(135deg, #021027, #002b53);
-        color: #fff;
-        text-align: center;
-        padding: 40px 20px;
-    }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
 
-    .glass-box {
-        width: 90%;
-        max-width: 900px;
-        margin: auto;
-        padding: 30px;
-        border-radius: 20px;
-        backdrop-filter: blur(14px);
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow: 0 0 30px rgba(0, 153, 255, 0.3);
-        animation: glow 4s infinite alternate;
-    }
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideDown 0.8s ease-out;
+        }
 
-    @keyframes glow {
-        0% { box-shadow: 0 0 25px #007bff; }
-        100% { box-shadow: 0 0 35px #00c3ff; }
-    }
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
 
-    h1 {
-        font-size: 36px;
-        margin-bottom: 15px;
-        color: #7ecbff;
-        text-shadow: 0 0 10px #009dff;
-    }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
 
-    input[type="file"] {
-        background: #004c8c;
-        padding: 12px;
-        border-radius: 10px;
-        border: 2px solid #007bff;
-        color: #fff;
-        cursor: pointer;
-        margin-bottom: 20px;
-    }
+        .logo:hover {
+            animation: glitch 0.3s;
+        }
 
-    .btn {
-        background: linear-gradient(90deg, #007bff, #00bfff);
-        padding: 12px 25px;
-        border: none;
-        color: #fff;
-        border-radius: 12px;
-        margin: 8px;
-        cursor: pointer;
-        font-size: 17px;
-        box-shadow: 0 0 15px rgba(0, 204, 255, 0.4);
-        transition: 0.2s;
-    }
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
 
-    .btn:hover {
-        box-shadow: 0 0 25px #00e5ff;
-        transform: scale(1.05);
-    }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
 
-    video {
-        width: 100%;
-        border-radius: 15px;
-        margin-top: 25px;
-        box-shadow: 0 0 20px rgba(0, 136, 255, 0.4);
-    }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+            position: relative;
+        }
 
-    .preset-title {
-        font-size: 22px;
-        margin-top: 20px;
-        margin-bottom: 5px;
-        color: #82e0ff;
-        text-shadow: 0 0 10px #00ccff;
-    }
-</style>
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+        }
 
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: floatRotate 8s ease-in-out infinite;
+            top: 20%;
+            left: 10%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(118, 75, 162, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: floatRotate 10s ease-in-out infinite reverse;
+            bottom: 10%;
+            right: 10%;
+        }
+
+        @keyframes floatRotate {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(50px, -50px) rotate(120deg); }
+            66% { transform: translate(-30px, 30px) rotate(240deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            display: inline-block;
+            animation: textShine 3s ease-in-out infinite;
+        }
+
+        @keyframes textShine {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: #aaa;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 1s ease-out 0.3s backwards;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out 0.6s backwards;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .cta-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 5rem 5%;
+            background: #0f0f0f;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: #1a1a1a;
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: #667eea;
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.3);
+        }
+
+        .service-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            transition: all 0.5s;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover h3 {
+            color: #764ba2;
+        }
+
+        .service-card p {
+            color: #aaa;
+            line-height: 1.8;
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            padding: 5rem 5%;
+            background: #0a0a0a;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .portfolio-item {
+            position: relative;
+            height: 280px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a3a 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border: 2px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .portfolio-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.4) 0%, rgba(118, 75, 162, 0.4) 100%);
+            opacity: 0;
+            transition: all 0.5s;
+            z-index: 1;
+        }
+
+        .portfolio-item:hover::before {
+            opacity: 1;
+        }
+
+        .portfolio-item::after {
+            content: '▶';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            font-size: 4rem;
+            color: #fff;
+            z-index: 2;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .portfolio-item:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .portfolio-item:hover {
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 25px 60px rgba(102, 126, 234, 0.4);
+            border-color: #667eea;
+        }
+
+        .portfolio-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+            z-index: 3;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.5s;
+        }
+
+        .portfolio-item:hover .portfolio-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .portfolio-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .portfolio-content p {
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 5%;
+            background: #0f0f0f;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #667eea, #764ba2, transparent);
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact p {
+            font-size: 1.2rem;
+            color: #aaa;
+            margin-bottom: 2.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1.2rem 2.5rem;
+            background: #1a1a1a;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.4s;
+            z-index: 0;
+        }
+
+        .social-link:hover::before {
+            left: 0;
+        }
+
+        .social-link span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .social-link:hover {
+            border-color: transparent;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            padding: 2rem 5%;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Scroll Reveal Animation */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+    </style>
 </head>
 <body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Kanha Edits</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
 
-<div class="glass-box">
-    <h1>Kp Edits</h1>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Kanha Edits</h1>
+            <p>Professional Video Editor | Bringing Your Vision to Life</p>
+            <a href="#contact" class="cta-button">Let's Work Together</a>
+        </div>
+    </section>
 
-    <input type="file" id="videoInput" accept="video/*"><br>
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <h2 class="section-title scroll-reveal">My Services</h2>
+        <div class="services-grid">
+            <div class="service-card scroll-reveal">
+                <div class="service-icon">🎬</div>
+                <h3>YouTube Videos</h3>
+                <p>Professional editing for vlogs, tutorials, reviews, and more. Optimized for engagement and retention.</p>
+            </div>
+            <div class="service-card scroll-reveal">
+                <div class="service-icon">📱</div>
+                <h3>Instagram & Social Media</h3>
+                <p>Eye-catching reels, stories, and posts that stand out. Perfect for growing your social presence.</p>
+            </div>
+            <div class="service-card scroll-reveal">
+                <div class="service-icon">🎥</div>
+                <h3>Short Films</h3>
+                <p>Cinematic editing with color grading, sound design, and visual effects to tell compelling stories.</p>
+            </div>
+            <div class="service-card scroll-reveal">
+                <div class="service-icon">✨</div>
+                <h3>Social Media Content</h3>
+                <p>Fast-paced, trend-focused editing for TikTok, Facebook, and other platforms to maximize reach.</p>
+            </div>
+        </div>
+    </section>
 
-    <button class="btn" id="trimBtn">✂ Trim 5 Seconds</button>
+    <!-- Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+        <h2 class="section-title scroll-reveal">Featured Work</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-item scroll-reveal">
+                <div class="portfolio-content">
+                    <h3>YouTube Vlog Series</h3>
+                    <p>Travel & Lifestyle Content</p>
+                </div>
+            </div>
+            <div class="portfolio-item scroll-reveal">
+                <div class="portfolio-content">
+                    <h3>Instagram Reels</h3>
+                    <p>Trending Social Media Content</p>
+                </div>
+            </div>
+            <div class="portfolio-item scroll-reveal">
+                <div class="portfolio-content">
+                    <h3>Short Film Project</h3>
+                    <p>Cinematic Storytelling</p>
+                </div>
+            </div>
+            <div class="portfolio-item scroll-reveal">
+                <div class="portfolio-content">
+                    <h3>Product Showcase</h3>
+                    <p>Commercial Content</p>
+                </div>
+            </div>
+            <div class="portfolio-item scroll-reveal">
+                <div class="portfolio-content">
+                    <h3>Music Video</h3>
+                    <p>Creative Visual Effects</p>
+                </div>
+            </div>
+            <div class="portfolio-item scroll-reveal">
+                <div class="portfolio-content">
+                    <h3>Event Highlights</h3>
+                    <p>Dynamic Event Coverage</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="preset-title">🎨 Video Style Presets</div>
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2 class="section-title scroll-reveal">Let's Create Together</h2>
+        <div class="contact-content scroll-reveal">
+            <p>Ready to bring your vision to life? Get in touch and let's discuss your next project!</p>
+            <div class="social-links">
+                <a href="https://t.me/kxxow1" class="social-link" target="_blank">
+                    <span>📱</span>
+                    <span>Contact on Telegram</span>
+                </a>
+            </div>
+        </div>
+    </section>
 
-    <button class="btn" id="reelBtn">📱 Reel Mode (9:16)</button>
-    <button class="btn" id="cinemaBtn">🎬 Cinematic</button>
-    <button class="btn" id="ytBtn">📺 YouTube Look</button>
-    <button class="btn" id="normalBtn">🎨 Normal Colors</button>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Kanha Edits. All rights reserved. | Crafted with passion for visual storytelling</p>
+    </footer>
 
-    <video id="preview" controls></video>
-</div>
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
 
-<script type="module">
-import { createFFmpeg, fetchFile } from "https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.4/dist/ffmpeg.min.js";
+        // Scroll reveal animation
+        const revealElements = document.querySelectorAll('.scroll-reveal');
+        
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const revealPoint = 100;
+                
+                if (elementTop < windowHeight - revealPoint) {
+                    element.classList.add('active');
+                }
+            });
+        };
 
-const ffmpeg = createFFmpeg({ log: true });
-let loaded = false;
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll(); // Initial check
 
-async function loadFF() {
-    if (!loaded) { await ffmpeg.load(); loaded = true; }
-}
-
-async function processVideo(cmd, out="out.mp4") {
-    const f = document.getElementById("videoInput").files[0];
-    if (!f) return alert("Please upload a video!");
-
-    await loadFF();
-    ffmpeg.FS("writeFile", "input.mp4", await fetchFile(f));
-    await ffmpeg.run(...cmd);
-    
-    const data = ffmpeg.FS("readFile", out);
-    document.getElementById("preview").src =
-      URL.createObjectURL(new Blob([data.buffer], { type: "video/mp4" }));
-}
-
-// Trim
-trimBtn.onclick = () =>
-  processVideo(["-i","input.mp4","-ss","0","-t","5","trim.mp4"], "trim.mp4");
-
-// Reel
-reelBtn.onclick = () =>
-  processVideo([
-    "-i","input.mp4",
-    "-vf","scale=720:1280,eq=brightness=0.05:saturation=1.3",
-    "reel.mp4"
-  ], "reel.mp4");
-
-// Cinematic
-cinemaBtn.onclick = () =>
-  processVideo([
-    "-i","input.mp4",
-    "-vf","scale=1920:816,eq=contrast=1.4:saturation=1.1,pad=1920:1080:0:(1080-816)/2:black",
-    "cinema.mp4"
-  ], "cinema.mp4");
-
-// YouTube look
-ytBtn.onclick = () =>
-  processVideo([
-    "-i","input.mp4",
-    "-vf","scale=1920:1080,unsharp=5:5:1.0,eq=contrast=1.15:saturation=1.1",
-    "yt.mp4"
-  ], "yt.mp4");
-
-// Normal color
-normalBtn.onclick = () =>
-  processVideo([
-    "-i","input.mp4",
-    "-vf","eq=contrast=1.1:brightness=0.03:saturation=1.2",
-    "normal.mp4"
-  ], "normal.mp4");
-
-</script>
-
+        // Parallax effect on hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-content');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+                hero.style.opacity = 1 - (scrolled / 700);
+            }
+        });
+    </script>
 </body>
 </html>
