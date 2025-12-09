@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cool Blue Video Editor</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #021027, #002b53);
+        color: #fff;
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .glass-box {
+        width: 90%;
+        max-width: 900px;
+        margin: auto;
+        padding: 30px;
+        border-radius: 20px;
+        backdrop-filter: blur(14px);
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 0 30px rgba(0, 153, 255, 0.3);
+        animation: glow 4s infinite alternate;
+    }
+
+    @keyframes glow {
+        0% { box-shadow: 0 0 25px #007bff; }
+        100% { box-shadow: 0 0 35px #00c3ff; }
+    }
+
+    h1 {
+        font-size: 36px;
+        margin-bottom: 15px;
+        color: #7ecbff;
+        text-shadow: 0 0 10px #009dff;
+    }
+
+    input[type="file"] {
+        background: #004c8c;
+        padding: 12px;
+        border-radius: 10px;
+        border: 2px solid #007bff;
+        color: #fff;
+        cursor: pointer;
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        background: linear-gradient(90deg, #007bff, #00bfff);
+        padding: 12px 25px;
+        border: none;
+        color: #fff;
+        border-radius: 12px;
+        margin: 8px;
+        cursor: pointer;
+        font-size: 17px;
+        box-shadow: 0 0 15px rgba(0, 204, 255, 0.4);
+        transition: 0.2s;
+    }
+
+    .btn:hover {
+        box-shadow: 0 0 25px #00e5ff;
+        transform: scale(1.05);
+    }
+
+    video {
+        width: 100%;
+        border-radius: 15px;
+        margin-top: 25px;
+        box-shadow: 0 0 20px rgba(0, 136, 255, 0.4);
+    }
+
+    .preset-title {
+        font-size: 22px;
+        margin-top: 20px;
+        margin-bottom: 5px;
+        color: #82e0ff;
+        text-shadow: 0 0 10px #00ccff;
+    }
+</style>
+
+</head>
+<body>
+
+<div class="glass-box">
+    <h1>💙 Cool Blue Video Editor</h1>
+
+    <input type="file" id="videoInput" accept="video/*"><br>
+
+    <button class="btn" id="trimBtn">✂ Trim 5 Seconds</button>
+
+    <div class="preset-title">🎨 Video Style Presets</div>
+
+    <button class="btn" id="reelBtn">📱 Reel Mode (9:16)</button>
+    <button class="btn" id="cinemaBtn">🎬 Cinematic</button>
+    <button class="btn" id="ytBtn">📺 YouTube Look</button>
+    <button class="btn" id="normalBtn">🎨 Normal Colors</button>
+
+    <video id="preview" controls></video>
+</div>
+
+<script type="module">
+import { createFFmpeg, fetchFile } from "https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.4/dist/ffmpeg.min.js";
+
+const ffmpeg = createFFmpeg({ log: true });
+let loaded = false;
+
+async function loadFF() {
+    if (!loaded) { await ffmpeg.load(); loaded = true; }
+}
+
+async function processVideo(cmd, out="out.mp4") {
+    const f = document.getElementById("videoInput").files[0];
+    if (!f) return alert("Please upload a video!");
+
+    await loadFF();
+    ffmpeg.FS("writeFile", "input.mp4", await fetchFile(f));
+    await ffmpeg.run(...cmd);
+    
+    const data = ffmpeg.FS("readFile", out);
+    document.getElementById("preview").src =
+      URL.createObjectURL(new Blob([data.buffer], { type: "video/mp4" }));
+}
+
+// Trim
+trimBtn.onclick = () =>
+  processVideo(["-i","input.mp4","-ss","0","-t","5","trim.mp4"], "trim.mp4");
+
+// Reel
+reelBtn.onclick = () =>
+  processVideo([
+    "-i","input.mp4",
+    "-vf","scale=720:1280,eq=brightness=0.05:saturation=1.3",
+    "reel.mp4"
+  ], "reel.mp4");
+
+// Cinematic
+cinemaBtn.onclick = () =>
+  processVideo([
+    "-i","input.mp4",
+    "-vf","scale=1920:816,eq=contrast=1.4:saturation=1.1,pad=1920:1080:0:(1080-816)/2:black",
+    "cinema.mp4"
+  ], "cinema.mp4");
+
+// YouTube look
+ytBtn.onclick = () =>
+  processVideo([
+    "-i","input.mp4",
+    "-vf","scale=1920:1080,unsharp=5:5:1.0,eq=contrast=1.15:saturation=1.1",
+    "yt.mp4"
+  ], "yt.mp4");
+
+// Normal color
+normalBtn.onclick = () =>
+  processVideo([
+    "-i","input.mp4",
+    "-vf","eq=contrast=1.1:brightness=0.03:saturation=1.2",
+    "normal.mp4"
+  ], "normal.mp4");
+
+</script>
+
+</body>
+</html>
